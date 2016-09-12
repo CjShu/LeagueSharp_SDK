@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE518842-0712-4E6F-9AB5-E143144D33B1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Flowers_Series</RootNamespace>
+    <AssemblyName>Flowers'Series</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="clipper_library">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\LeagueSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.Common, Version=1.0.0.52, Culture=neutral, PublicKeyToken=57a5292ddd39b703, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\LeagueSharp.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.Data">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\LeagueSharp.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.SDKEx">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\LeagueSharp.SDKEx.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>D:\qMLQe\I5QEqMLQe\References\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Card.cs" />
+    <Compile Include="Common\Cards.cs" />
+    <Compile Include="Common\Evade\Collision.cs" />
+    <Compile Include="Common\Evade\Config.cs" />
+    <Compile Include="Common\Evade\EarlyEvade.cs" />
+    <Compile Include="Common\Evade\Evader.cs" />
+    <Compile Include="Common\Evade\EvadeSpellData.cs" />
+    <Compile Include="Common\Evade\EvadeSpellDatabase.cs" />
+    <Compile Include="Common\Evade\Geometry.cs" />
+    <Compile Include="Common\Evade\Helpers.cs" />
+    <Compile Include="Common\Evade\Evade.cs" />
+    <Compile Include="Common\Evade\Skillshot.cs" />
+    <Compile Include="Common\Evade\SkillshotDetector.cs" />
+    <Compile Include="Common\Evade\SpellBlocker.cs" />
+    <Compile Include="Common\Evade\SpellData.cs" />
+    <Compile Include="Common\Evade\SpellDatabase.cs" />
+    <Compile Include="Common\Evade\Utils.cs" />
+    <Compile Include="Common\Geometry.cs" />
+    <Compile Include="Common\MEC.cs" />
+    <Compile Include="Common\OKTWCommon.cs" />
+    <Compile Include="Common\SelectStatus.cs" />
+    <Compile Include="Common\WaypointTracker.cs" />
+    <Compile Include="Common\YasuoCollsion.cs" />
+    <Compile Include="Plugings\Ahri.cs" />
+    <Compile Include="Plugings\Blitzcrank.cs" />
+    <Compile Include="Plugings\Darius.cs" />
+    <Compile Include="Plugings\Ezreal.cs" />
+    <Compile Include="Plugings\Ashe.cs" />
+    <Compile Include="Plugings\Akali.cs" />
+    <Compile Include="Plugings\Graves.cs" />
+    <Compile Include="Plugings\Hecarim.cs" />
+    <Compile Include="Plugings\Illaoi.cs" />
+    <Compile Include="Plugings\Karma.cs" />
+    <Compile Include="Plugings\Morgana.cs" />
+    <Compile Include="Plugings\Ryze.cs" />
+    <Compile Include="Plugings\TwistedFate.cs" />
+    <Compile Include="Plugings\Viktor.cs" />
+    <Compile Include="Plugings\Vladimir.cs" />
+    <Compile Include="Plugings\Riven.cs" />
+    <Compile Include="Plugings\Sivir.cs" />
+    <Compile Include="Plugings\Tristana.cs" />
+    <Compile Include="Plugings\Twitch.cs" />
+    <Compile Include="Plugings\Vayne.cs" />
+    <Compile Include="Prediction\OKTWPrediction.cs" />
+    <Compile Include="Prediction\xcsoftPrediction.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\HpBarDraw.cs" />
+    <Compile Include="Common\Manager.cs" />
+    <Compile Include="Utility\AutoLevel.cs" />
+    <Compile Include="Utility\Defensive.cs" />
+    <Compile Include="Utility\Offensive.cs" />
+    <Compile Include="Utility\Potions.cs" />
+    <Compile Include="Utility\SkinChance.cs" />
+    <Compile Include="Utility\Summoner.cs" />
+    <Compile Include="Utility\Tools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

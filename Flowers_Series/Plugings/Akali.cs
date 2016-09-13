@@ -280,10 +280,9 @@
                 {
                     var minion = GetMinions(Me.Position, R.Range).FirstOrDefault(x => x.Distance(target) < R.Range && R.CanCast(x));
 
-                    if (minion != null)
+                    if (minion != null && Me.CountEnemyHeroesInRange(R.Range) == 0)
                     {
                         R.CastOnUnit(minion);
-                        return;
                     }
                 }
 

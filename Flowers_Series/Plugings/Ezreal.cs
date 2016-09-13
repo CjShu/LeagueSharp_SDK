@@ -54,6 +54,7 @@
             var LaneClearMenu = Menu.Add(new Menu("Ezreal_LaneClear", "Lane Clear"));
             {
                 LaneClearMenu.Add(new MenuBool("Q", "Use Q", true));
+                LaneClearMenu.Add(new MenuBool("QOutAA", "Use Q| Out of Attack Range Farm", true));
                 LaneClearMenu.Add(new MenuSlider("QMana", "Use Q|When Player ManaPercent >= %", 30));
                 LaneClearMenu.Add(new MenuBool("W", "Use W (Push Tower)", true));
             }
@@ -298,16 +299,19 @@
 
                     if (Minions.Count > 0)
                     {
-                        foreach (var min in Minions.Where(x => x.Health < Q.GetDamage(x)))
+                        var min = Minions.FirstOrDefault();
+
+                        if (min == null)
+                            throw new ArgumentNullException(nameof(min));
+
+                        if (Menu["Ezreal_LaneClear"]["QOutAA"] && !InAutoAttackRange(min) && min.Health < Q.GetDamage(min))
                         {
-                            if (InAutoAttackRange(min) && min.Health > Me.GetAutoAttackDamage(min))
-                            {
-                                Q.Cast(min);
-                            }
-                            else if (!InAutoAttackRange(min) && min.IsValidTarget(Q.Range))
-                            {
-                                Q.Cast(min);
-                            }
+                            Q.Cast(min);
+                        }
+
+                        if (min.Health > Me.GetAutoAttackDamage(min))
+                        {
+                            Q.Cast(min);
                         }
                     }
                 }

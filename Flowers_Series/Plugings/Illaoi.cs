@@ -16,6 +16,7 @@
         private static Spell W;
         private static Spell E;
         private static Spell R;
+        private static bool IsRActive;
         private static HpBarDraw DrawHpBar = new HpBarDraw();
 
         private static Obj_AI_Hero Me => Program.Me;
@@ -106,11 +107,24 @@
 
             WriteConsole(GameObjects.Player.ChampionName + " Inject!");
 
+            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
             Events.OnGapCloser += OnGapCloser;
             Obj_AI_Base.OnDoCast += OnDoCast;
             Variables.Orbwalker.OnAction += OnAction;
             Game.OnUpdate += OnUpdate;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs Args)
+        {
+            if (sender.IsMe)
+            {
+                if (Me.GetSpellSlot(Args.SData.Name) == SpellSlot.R)
+                {
+                    IsRActive = true;
+                    DelayAction.Add(7000, () => IsRActive = false);
+                }
+            }
         }
 
         private static void OnGapCloser(object obj, Events.GapCloserEventArgs Args)
@@ -145,7 +159,7 @@
                             W.Cast();
                         }
 
-                        if (Menu["Illaoi_Combo"]["WUlt"] && Me.HasBuff("IllaoiR"))
+                        if (Menu["Illaoi_Combo"]["WUlt"] && (Me.HasBuff("IllaoiR") || IsRActive))
                         {
                             W.Cast();
                         }
@@ -185,7 +199,7 @@
                                 W.Cast();
                             }
 
-                            if (Menu["Illaoi_Combo"]["WUlt"] && Me.HasBuff("IllaoiR"))
+                            if (Menu["Illaoi_Combo"]["WUlt"] && (Me.HasBuff("IllaoiR") || IsRActive))
                             {
                                 W.Cast();
                             }

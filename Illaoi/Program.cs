@@ -16,6 +16,7 @@
         private static Spell Q, W, E, R;
         private static SpellSlot Ignite = SpellSlot.Unknown;
         private static HpBarDraw DrawHpBar = new HpBarDraw();
+        private static bool IsRActive;
         private static string[] AutoEnableList =
         {
              "Annie", "Ahri", "Akali", "Anivia", "Annie", "Brand", "Cassiopeia", "Diana", "Evelynn", "FiddleSticks", "Fizz", "Gragas", "Heimerdinger", "Karthus",
@@ -153,16 +154,29 @@
                 DrawMenu.Add(new MenuBool("DrawDamage", "Draw Combo Damage", true));
             }
 
-            LeagueSharp.SDK.Utils.DelayAction.Add(5000, () => Variables.Orbwalker.Enabled = true);
+            DelayAction.Add(5000, () => Variables.Orbwalker.Enabled = true);
         }
 
         private static void LoadEvent()
         {
+            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
             Events.OnGapCloser += OnGapCloser;
             Obj_AI_Base.OnDoCast += OnDoCast;
             Variables.Orbwalker.OnAction += OnAction;
             Game.OnUpdate += OnUpdate;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs Args)
+        {
+            if (sender.IsMe)
+            {
+                if (Me.GetSpellSlot(Args.SData.Name) == SpellSlot.R)
+                {
+                    IsRActive = true;
+                    DelayAction.Add(7000, () => IsRActive = false);
+                }
+            }
         }
 
         private static void OnGapCloser(object obj, Events.GapCloserEventArgs Args)
@@ -197,7 +211,7 @@
                             W.Cast();
                         }
 
-                        if (Menu["Combo"]["WUlt"] && Me.HasBuff("IllaoiR"))
+                        if (Menu["Combo"]["WUlt"] && (Me.HasBuff("IllaoiR") || IsRActive))
                         {
                             W.Cast();
                         }
@@ -223,7 +237,7 @@
                                 W.Cast();
                             }
 
-                            if (Menu["Combo"]["WUlt"] && Me.HasBuff("IllaoiR"))
+                            if (Menu["Combo"]["WUlt"] && (Me.HasBuff("IllaoiR") || IsRActive))
                             {
                                 W.Cast();
                             }

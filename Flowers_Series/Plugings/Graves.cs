@@ -272,7 +272,19 @@
 
         private static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
+            if (!sender.IsMe)
+                return;
+
             var hero = args.Target as Obj_AI_Hero;
+
+            //var name = args.SData.Name;
+            // Game.PrintChat(name);
+
+            //GravesAutoAttackRecoil
+            //GravesBasicAttack
+            //GravesBasicAttackSpread
+            //if (args.SData.Name.Contains("Attack"))
+            //    Me.Spellbook.CastSpell(SpellSlot.E, Game.CursorPos);
 
             if (hero != null && InCombo)
             {
@@ -290,6 +302,8 @@
                     }
                 }
             }
+
+
         }
 
         private static void OnDraw(EventArgs args)
@@ -317,7 +331,7 @@
                 Render.Circle.DrawCircle(Me.Position, R.Range, System.Drawing.Color.YellowGreen);
             }
 
-            if (Menu["Draw"]["DrawDamage"])
+            if (Menu["Graves_Draw"]["DrawDamage"])
             {
                 foreach (var e in ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget() && e.IsValid && !e.IsDead && !e.IsZombie))
                 {

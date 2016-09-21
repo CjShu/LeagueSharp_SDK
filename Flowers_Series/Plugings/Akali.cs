@@ -110,29 +110,16 @@
 
             WriteConsole(GameObjects.Player.ChampionName + " Inject!");
 
+            Obj_AI_Base.OnDoCast += OnDoCast;
             Events.OnGapCloser += OnGapCloser;
-            Variables.Orbwalker.OnAction += OnAction;
             Game.OnUpdate += OnUpdate;
             Drawing.OnDraw += OnDraw;
         }
 
-        private static void OnGapCloser(object obj, Events.GapCloserEventArgs Args)
+        private static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs Args)
         {
-            if (!Args.IsDirectedToPlayer || !Args.Sender.IsEnemy || Args.Sender == null) return;
-
-            var target = Args.Sender;
-
-            if (target.IsValidTarget(250))
-            {
-                W.Cast(Me.ServerPosition);
-            }
-        }
-
-        private static void OnAction(object obj, OrbwalkingActionArgs Args)
-        {
-            if (Args.Type != OrbwalkingType.AfterAttack) return;
-
-            if (!E.IsReady()) return;
+            if (!sender.IsMe || !AutoAttack.IsAutoAttack(Args.SData.Name) || !E.IsReady())
+                return;
 
             if (InCombo)
             {
@@ -171,6 +158,18 @@
             if (Menu["Akali_JungleClear"]["E"] && mobs.FirstOrDefault().IsValidTarget(E.Range))
             {
                 E.Cast();
+            }
+        }
+
+        private static void OnGapCloser(object obj, Events.GapCloserEventArgs Args)
+        {
+            if (!Args.IsDirectedToPlayer || !Args.Sender.IsEnemy || Args.Sender == null) return;
+
+            var target = Args.Sender;
+
+            if (target.IsValidTarget(250))
+            {
+                W.Cast(Me.ServerPosition);
             }
         }
 
@@ -278,7 +277,8 @@
                 if (Menu["Akali_Combo"]["RGap"].GetValue<MenuSliderButton>().BValue && target.DistanceToPlayer() > R.Range &&
                     target.IsValidTarget(1400) && Menu["Akali_Combo"]["RGap"].GetValue<MenuSliderButton>().SValue >= RCount)
                 {
-                    var minion = GetMinions(Me.Position, R.Range).FirstOrDefault(x => x.Distance(target) < R.Range && R.CanCast(x));
+                    var minion = ObjectManager.Get<Obj_AI_Minion>().Where(x => x.IsValidTarget(R.Range) && !x.IsAlly && R.CanCast(x)).
+                        OrderBy(x => x.Position.Distance(target.Position)).FirstOrDefault();
 
                     if (minion != null && Me.CountEnemyHeroesInRange(R.Range) == 0)
                     {

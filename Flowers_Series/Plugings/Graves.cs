@@ -277,15 +277,6 @@
 
             var hero = args.Target as Obj_AI_Hero;
 
-            //var name = args.SData.Name;
-            // Game.PrintChat(name);
-
-            //GravesAutoAttackRecoil
-            //GravesBasicAttack
-            //GravesBasicAttackSpread
-            //if (args.SData.Name.Contains("Attack"))
-            //    Me.Spellbook.CastSpell(SpellSlot.E, Game.CursorPos);
-
             if (hero != null && InCombo)
             {
                 var t = hero;

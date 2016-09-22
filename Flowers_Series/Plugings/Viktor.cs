@@ -92,6 +92,7 @@
 
             var MiscMenu = Menu.Add(new Menu("Viktor_Misc", "Misc"));
             {
+                MiscMenu.Add(new MenuKeyBind("SemiW", "Semi W Key", System.Windows.Forms.Keys.W, KeyBindType.Press));
                 MiscMenu.Add(new MenuBool("AutoWInMePos", "Use W | Anti Gapcloser", true));
                 MiscMenu.Add(new MenuBool("SmartW", "Use W | Interrupt", true));
                 MiscMenu.Add(new MenuBool("AutoFollowR", "Auto R Follow", true));
@@ -199,6 +200,27 @@
 
             if (Menu["Viktor_Misc"]["AutoFollowR"] && Me.HasBuff("ViktorChaosStormTimer"))
                 FollowLogic();
+
+            if (Menu["Viktor_Misc"]["SemiW"].GetValue<MenuKeyBind>().Active && W.IsReady())
+            {
+                var target = GetTarget(W.Range, DamageType.Magical);
+
+                if (Me.IsFacing(target))
+                {
+                    var WPos = W.GetPrediction(target).CastPosition - 150 * (W.GetPrediction(target).UnitPosition - target.ServerPosition).Normalized();
+                    W.Cast(WPos);
+                }
+                else if (!Me.IsFacing(target))
+                {
+                    var WPos = W.GetPrediction(target).CastPosition + 150 * (W.GetPrediction(target).UnitPosition - target.ServerPosition).Normalized();
+                    W.Cast(WPos);
+                }
+
+                if (target.CountEnemyHeroesInRange(W.Range) >= 2)
+                {
+                    W.Cast(target);
+                }
+            }
 
             if (InCombo)
                 Combo();
